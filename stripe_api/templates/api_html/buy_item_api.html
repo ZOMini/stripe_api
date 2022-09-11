@@ -1,0 +1,12 @@
+<html>
+  <head>
+    <title>Buy cool new product!{{item.name}}</title>
+  </head>
+  <body>
+    <p> Товар: {{item.name}}</p>
+    <p> Описание: {{item.description}}</p>
+    <p> Цена: {{item.price|floatformat:2}} {{item.currency}}</p>
+    <form action="{% url 'api:buy_item' item.id %}" method="get">
+      <button type="submit">Купить этот товар</button>
+  </body>
+</html>

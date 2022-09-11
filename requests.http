@@ -1,2 +1,30 @@
 ### Город по id - 200
 GET  http://127.0.0.1:8000/buy/1/
+
+### Город по id - 200
+POST  http://127.0.0.1:8000/order_create/
+Content-Type: application/json
+
+{
+    "discont": "sljEVntJ",
+    "tax": "20%",
+    "items": [1,2]
+}
+
+### Город по id - 200
+POST  http://127.0.0.1:8000/order_create/
+Content-Type: application/json
+
+{
+    "items": [1,2]
+}
+
+### Город по id - 200
+POST  http://127.0.0.1:8000/order_create/
+Content-Type: application/json
+
+{
+    "discont": "sljEVntJ",
+    "tax": "20%",
+    "items": [3,4]
+}

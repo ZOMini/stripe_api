@@ -2,9 +2,13 @@ from django.db import models
 
 
 class Item(models.Model):
-    name = models.CharField('Имя товара.', max_length=255, unique=True, blank=False)
-    description = models.CharField('Описание товара.', max_length=255)
-    price = models.IntegerField('Цена товара.', blank=False)
+    name = models.CharField('Имя товара', max_length=255, unique=True, blank=False)
+    description = models.CharField('Описание товара', max_length=255)
+    price = models.FloatField('Цена товара', blank=False)
+    currency = models.CharField('Валюта',
+                                max_length=3,
+                                choices=[('usd','usd'),('eur','eur')],
+                                default='usd')
 
     class Meta:
         verbose_name = 'Товар'
@@ -44,7 +48,7 @@ class Tax(models.Model):
         default_related_name = 'TaxOrder'
 
     def __str__(self):
-        return self.tax_unit
+        return self.tax_link
 
 class Order(models.Model):
     discont = models.ForeignKey(
@@ -52,18 +56,22 @@ class Order(models.Model):
         on_delete=models.CASCADE,
         related_name='order',
         verbose_name='Дисконт',
-        help_text='Выберите дисконт для добавления в заказ')
+        help_text='Выберите дисконт для добавления в заказ',
+        null=True,
+        blank=True)
     tax = models.ForeignKey(
         Tax,
         on_delete=models.CASCADE,
         related_name='order',
         verbose_name='Налог',
-        help_text='Выберите налог для добавления в заказ')
+        help_text='Выберите налог для добавления в заказ',
+        null=True,
+        blank=True)
     items = models.ManyToManyField(
         Item,
         related_name='order',
         verbose_name='Заказ товаров.',
-        help_text='Выберите товар.')
+        help_text='Выберите товар.(В админке несколько товаров через - "Ctr")')
     
     class Meta:
         verbose_name = 'Заказ'

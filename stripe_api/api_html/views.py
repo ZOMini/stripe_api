@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+
+from api.models import Item
 
 
 def success(request):
@@ -11,7 +13,8 @@ def cancel(request):
     context = {}
     return render(request, template, context)
 
-def buy_item(request):
+def buy_item(request, id):
     template = 'api_html/buy_item.html'
-    context = {}
+    item = get_object_or_404(Item, id=id)
+    context = {'id': id, 'item': item}
     return render(request, template, context)

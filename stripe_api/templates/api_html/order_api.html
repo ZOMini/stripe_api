@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title>Buy cool new products!{{order.id}}</title>
+  </head>
+  <body>
+    <ul>
+      {% for item in items %}
+      <li><p>Товар: {{item.name}}, Описание: {{item.description}}, Цена: {{item.price|floatformat:2}}{{item.currency}}</p></li>
+      {% endfor %}
+    </ul>
+    <p> Всего на сумму: {{summ}}
+    <form action="{% url 'api:order_buy' order.id %}" method="get">
+      <button type="submit">Заказать эти товары</button>
+  </body>
+</html>

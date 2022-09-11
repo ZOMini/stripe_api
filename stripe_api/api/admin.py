@@ -10,7 +10,7 @@ from api.models import Discount, Item, Order, Tax
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'name', 'description', 'price')
+    list_display = ('id', 'name', 'description', 'price', 'currency')
     search_fields = ('name', )
     empty_value_display = '-пусто-'
     list_filter = ('name',)
@@ -33,6 +33,7 @@ class TaxAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+    # В админке несколько товаров - зажав "ctr".
     list_display = ('id', 'get_items', 'discont', 'tax')
 
     def get_items(self, obj):
