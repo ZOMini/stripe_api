@@ -6,7 +6,7 @@
     <p> Товар: {{item.name}}</p>
     <p> Описание: {{item.description}}</p>
     <p> Цена: {{item.price|floatformat:2}} {{item.currency}}</p>
-    <form action="{% url 'api:buy_item' item.id %}" method="get">
+    <a href="{% url 'api:buy_item' item.id %}?coupon={{ coupon|urlencode }}">
       <button type="submit">Купить этот товар</button>
   </body>
 </html>

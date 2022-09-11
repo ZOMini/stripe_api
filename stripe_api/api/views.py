@@ -1,5 +1,5 @@
 import stripe
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect
 from rest_framework import status
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
@@ -7,21 +7,23 @@ from rest_framework.response import Response
 
 from api.models import Discount, Item, Order, Tax
 from api.sub_view import generate_line_items
-from api.var import API_KEY, TAX20
+from api.var import API_KEY, CANCEL_URL, SUCCESS_URL, TAX20
 
 stripe.api_key = API_KEY
 
 @api_view(['GET'])
-@renderer_classes([TemplateHTMLRenderer,])
+@renderer_classes([TemplateHTMLRenderer])
 def item_detail(request, id):
+    discont = request.query_params.get('coupon')
     item = get_object_or_404(Item, id=id)
-    context = {'id': id, 'item': item}
+    context = {'id': id, 'item': item, 'coupon': discont}
     return Response(data=context, template_name='api_html/buy_item_api.html')
 
 
 @api_view(['GET'])
 def buy_item(request, id):
-    discont = request.query_params.get('coupon', None)
+    discont = request.query_params.get('coupon')
+    if discont == 'None': discont = []
     item = get_object_or_404(Item, id=id)
     session = stripe.checkout.Session.create(
         line_items=[{
@@ -37,15 +39,15 @@ def buy_item(request, id):
         }],
         mode='payment',
         discounts=[{'coupon': discont,}],
-        success_url='http://127.0.0.1:8000/html/success',
-        cancel_url='http://127.0.0.1:8000/html/cancel',
+        success_url=SUCCESS_URL,
+        cancel_url=CANCEL_URL,
     )
     return redirect(session.url)
     
 
 
 @api_view(['POST'])
-@renderer_classes([JSONRenderer,])
+@renderer_classes([JSONRenderer])
 def order_create(request):
     try: discont = Discount.objects.get(
         discont_link = request.data.get('discont'))
@@ -70,16 +72,14 @@ def order_create(request):
         order.items.set(items_list)
     except Exception as e:
         return Response({'error': e.args}, status=status.HTTP_400_BAD_REQUEST)
-    return Response(data={'orderID': order.id}, status=status.HTTP_201_CREATED)
+    return Response(data={'orderID': order.id},
+                    status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 @renderer_classes([TemplateHTMLRenderer])
 def order_html(request, id):
-    try: 
-        order = Order.objects.get(id=id)
-        items = Item.objects.filter(order=id)
-    except Exception as e:
-        return Response({'error': e.args}, status=status.HTTP_400_BAD_REQUEST)
+    order = get_object_or_404(Order, id=id)
+    items = Item.objects.filter(order=id)
     summ = 0
     for item in items:
         summ += item.price
@@ -87,7 +87,7 @@ def order_html(request, id):
     return Response(data=context, template_name='api_html/order_api.html')
 
 @api_view(['GET'])
-@renderer_classes([JSONRenderer,])
+@renderer_classes([JSONRenderer])
 def order_buy(request, id):
     try: 
         order = Order.objects.get(id=id)
@@ -105,7 +105,7 @@ def order_buy(request, id):
         line_items=line_items,
         mode='payment',
         discounts=discont,
-        success_url='http://127.0.0.1:8000/html/success',
-        cancel_url='http://127.0.0.1:8000/html/cancel',
+        success_url=SUCCESS_URL,
+        cancel_url=CANCEL_URL,
     )
     return redirect(session.url)
