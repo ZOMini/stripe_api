@@ -18,6 +18,7 @@ Spripe API. Работа с платежной системой Stripe.<br>
 ### Инструкции для деплоя проекта на сервере:
 - https://docs.docker.com/engine/install/ - Устанавливаем докер
 - В 'Actions secrets' в настройках вашего проекта на GitHub внесите необходимые параметры сервера:
+(некоторые переменные задал по умолчанию, для ускорения деплоя и тестирования)
 ```
 DOCKER_PASSWORD - Пароль от DockerHub (для обновления образа на DockerHub)
 DOCKER_USERNAME - Логин от DockerHub (для обновления образа на DockerHub)
@@ -28,7 +29,7 @@ SSH_KEY - Приватный ssh-ключ
 SECRET_KEY
 DEBUG
 ```
-- После деплоя запускаем скрипт, из папки ~/stripe_api, там лежит docker-compose.yaml - (Миграции, статика, создание суперпользователя):
+- После деплоя запускаем скрипт, из папки ~/stripe_api, там лежит docker-compose.yaml - (Миграции, статика, создание суперпользователя - username = superuser password = password):
 ```
 sudo docker-compose exec web python script.py
 ```
