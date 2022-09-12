@@ -3,13 +3,17 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-8xmmwqm%95=lllml*rq5(#v&2xqxdm%0w5dwwz7j_zrz#^v=!2'
+SECRET_KEY = os.getenv('SECRET_KEY', default ='django-insecure-8xmmwqm%95=lllml*rq5(#v&2xqxdm%0w5dwwz7j_zrz#^v=!2')
 
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = ['127.0.0.1',]
+
+CSRF_TRUSTED_ORIGINS = ['http://*.127.0.0.1',]
+SERV_HOST = os.getenv('HOST', default ='127.0.0.1')
+CSRF_TRUSTED_ORIGINS.append(f'http://*.{SERV_HOST}:9005')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -55,10 +59,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'stripe_api.wsgi.application'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.getenv('DB_ENGINE', default='django.db.backends.postgresql'),
+        'NAME': os.getenv('DB_NAME', default='postgres'),
+        'USER': os.getenv('POSTGRES_USER', default='postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='postgres'),
+        'HOST': os.getenv('DB_HOST', default='db'),
+        'PORT': os.getenv('DB_PORT', default='5432')
     }
 }
 
@@ -85,7 +100,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
