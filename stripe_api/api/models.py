@@ -7,7 +7,7 @@ class Item(models.Model):
     price = models.FloatField('Цена товара', blank=False)
     currency = models.CharField('Валюта',
                                 max_length=3,
-                                choices=[('usd','usd'),('eur','eur')],
+                                choices=[('usd', 'usd'), ('eur', 'eur')],
                                 default='usd')
 
     class Meta:
@@ -19,14 +19,10 @@ class Item(models.Model):
         return self.name
 
 
-
 class Discount(models.Model):
     discont_unit = models.CharField('Скидка', max_length=255)
     discont_link = models.CharField('Ссылка Stripe', max_length=255)
-    # order = models.ManyToManyField(Order,
-    #     verbose_name='Дисконт.',
-    #     help_text='Выберете дисконт.')
-    
+
     class Meta:
         verbose_name = 'Дисконт'
         verbose_name_plural = 'Дисконты'
@@ -35,13 +31,11 @@ class Discount(models.Model):
     def __str__(self):
         return self.discont_unit
 
+
 class Tax(models.Model):
     tax_unit = models.CharField('Налог', max_length=255)
     tax_link = models.CharField('Ссылка Stripe', max_length=255)
-    # order = models.ManyToManyField(Order,
-    #     verbose_name='Налог.',
-    #     help_text='Выберете налог.')
-    
+
     class Meta:
         verbose_name = 'Налог'
         verbose_name_plural = 'Налоги'
@@ -49,6 +43,7 @@ class Tax(models.Model):
 
     def __str__(self):
         return self.tax_link
+
 
 class Order(models.Model):
     discont = models.ForeignKey(
@@ -72,7 +67,7 @@ class Order(models.Model):
         related_name='order',
         verbose_name='Заказ товаров.',
         help_text='Выберите товар.(В админке несколько товаров через - "Ctr")')
-    
+
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'

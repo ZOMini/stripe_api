@@ -2,10 +2,6 @@ from django.contrib import admin
 
 from api.models import Discount, Item, Order, Tax
 
-# class ItemsInline(admin.StackedInline):
-
-#     model = Item
-#     extra = 0
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
@@ -15,6 +11,7 @@ class ItemAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     list_filter = ('name',)
 
+
 @admin.register(Discount)
 class DiscontAdmin(admin.ModelAdmin):
 
@@ -23,6 +20,7 @@ class DiscontAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     list_filter = ('discont_unit',)
 
+
 @admin.register(Tax)
 class TaxAdmin(admin.ModelAdmin):
 
@@ -30,6 +28,7 @@ class TaxAdmin(admin.ModelAdmin):
     search_fields = ('tax_unit', )
     empty_value_display = '-пусто-'
     list_filter = ('tax_unit',)
+
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
