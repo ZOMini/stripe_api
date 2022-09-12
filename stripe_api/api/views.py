@@ -50,11 +50,11 @@ def order_create(request):
     try:
         discont = Discount.objects.get(
             discont_link=request.data.get('discont'))
-    except IndexError:
+    except:
         discont = None
     try:
         tax = Tax.objects.get(tax_unit=request.data.get('tax'))
-    except IndexError:
+    except:
         tax = Tax.objects.get(tax_unit='tax20')
     items = request.data.get('items')
     if items is None:
