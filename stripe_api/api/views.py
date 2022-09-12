@@ -2,7 +2,11 @@ import stripe
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework import status
 from rest_framework.decorators import api_view, renderer_classes
-from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from rest_framework.renderers import (
+    BrowsableAPIRenderer,
+    JSONRenderer,
+    TemplateHTMLRenderer
+)
 from rest_framework.response import Response
 
 from api.models import Discount, Item, Order, Tax
@@ -12,7 +16,7 @@ from api.var import API_KEY, CANCEL_URL, SUCCESS_URL, TAX20
 stripe.api_key = API_KEY
 
 @api_view(['GET'])
-@renderer_classes([TemplateHTMLRenderer])
+@renderer_classes([BrowsableAPIRenderer])
 def item_detail(request, id):
     discont = request.query_params.get('coupon')
     item = get_object_or_404(Item, id=id)
