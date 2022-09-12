@@ -4,7 +4,7 @@
 Spripe API. Работа с платежной системой Stripe.<br>
 
 
-Проект работает: <br>
+# Проект работает:
 - Для тестирования использовал REST Client for Visual Studio Code, см. файл requests.http в папке с проектом.
 - http://130.193.37.228:9005/admin/ -username = superuser password = password
 - http://130.193.37.228:9005/item/1/ api html с кнопкой покупки отдельного товара.
@@ -14,8 +14,8 @@ Spripe API. Работа с платежной системой Stripe.<br>
 - http://130.193.37.228:9005/order_create/ api создания ордера (см. файл requests.http, корень репозитария, дада:) - нужна api документация).
 - http://130.193.37.228:9005/order_html/1/ api html с кнопкой покупки по Ордеру.
 - http://130.193.37.228:9005/order_buy/1/ api редиректа ордера на stripe.
-<br>
-Инструкции для деплоя проекта на сервере:
+
+# Инструкции для деплоя проекта на сервере:
 - https://docs.docker.com/engine/install/ - Устанавливаем докер
 - В 'Actions secrets' в настройках вашего проекта на GitHub внесите необходимые параметры сервера:
 ```
@@ -32,10 +32,9 @@ DEBUG
 ```
 sudo docker-compose exec web python script.py
 ```
-<br>
 
 
-Полезные команды:
+# Полезные команды:
 ```
 sudo docker-compose exec web python script.py
 sudo docker-compose exec web python manage.py collectstatic --noinput
