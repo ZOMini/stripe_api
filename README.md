@@ -10,14 +10,36 @@ Spripe API. Работа с платежной системой Stripe.<br>
 - http://130.193.37.228:9005/item/1/ api html с кнопкой покупки отдельного товара.
 - http://130.193.37.228:9005/item/1/?coupon=sljEVntJ С промиком.
 - http://130.193.37.228:9005/buy/1/ api редиректа на stripe
-- http://130.193.37.228:9005/item/1/?coupon=sljEVntJ c промиком
-- http://130.193.37.228:9005/order_create/ api создания ордера (см. файл requests.http, корень репозитария, дада:) - нужна api документация )
-- http://130.193.37.228:9005/order_html/1/ api html с кнопкой покупки по Ордеру 
-- http://130.193.37.228:9005/order_buy/1/ api редиректа ордера на stripe
+- http://130.193.37.228:9005/item/1/?coupon=sljEVntJ С промиком.
+- http://130.193.37.228:9005/order_create/ api создания ордера (см. файл requests.http, корень репозитария, дада:) - нужна api документация ).
+- http://130.193.37.228:9005/order_html/1/ api html с кнопкой покупки по Ордеру.
+- http://130.193.37.228:9005/order_buy/1/ api редиректа ордера на stripe.
+<br>
+Инструкции для деплоя проекта на сервере:
+- https://docs.docker.com/engine/install/ - Устанавливаем докер
+- В 'Actions secrets' в настройках вашего проекта на GitHub внесите необходимые параметры сервера:
+```
+DOCKER_PASSWORD - Пароль от DockerHub (для обновления образа на DockerHub)
+DOCKER_USERNAME - Логин от DockerHub (для обновления образа на DockerHub)
+HOST - Публичный ip адрес сервера
+USER - Пользователь сервера
+PASSPHRASE - Если ssh-ключ защищен фразой-паролем
+SSH_KEY - Приватный ssh-ключ
+SECRET_KEY
+DEBUG
+```
+- После деплоя запускаем скрипт, из папки ~/stripe_api, там лежит docker-compose.yaml - (Миграции, статика, создание суперпользователя):
+```
+sudo docker-compose exec web python script.py
+```
+<br>
+
 
 Полезные команды:
 ```
 sudo docker-compose exec web python script.py
 sudo docker-compose exec web python manage.py collectstatic --noinput
-sudo docker-compose exec web python manage.py migrate --noinput 
+sudo docker-compose exec web python manage.py migrate --noinput
+sudo docker-compose down
+sudo docker image prune
 ```
