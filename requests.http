@@ -1,17 +1,17 @@
 ### html - 200
-GET  http://127.0.0.1:8000/item/1/
+GET  http://130.193.37.228:9005/item/1/
 
 ###  - 404
-GET  http://127.0.0.1:8000/item/122444/
+GET  http://130.193.37.228:9005/item/122444/
 
 ###  - 200
-GET  http://127.0.0.1:8000/buy/1/
+GET  http://130.193.37.228:9005/buy/1/
 
 ###  - 404
-GET  http://127.0.0.1:8000/buy/122444/
+GET  http://130.193.37.228:9005/buy/122444/
 
 ### С дисконтом и налогом - 200
-POST  http://127.0.0.1:8000/order_create/
+POST  http://130.193.37.228:9005/order_create/
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 }
 
 ### Без дисконта и налога - 200
-POST  http://127.0.0.1:8000/order_create/
+POST  http://130.193.37.228:9005/order_create/
 Content-Type: application/json
 
 {
@@ -29,17 +29,17 @@ Content-Type: application/json
 }
 
 ### Разные валюты - 409
-POST  http://127.0.0.1:8000/order_create/
+POST  http://130.193.37.228:9005/order_create/
 Content-Type: application/json
 
 {
     "discont": "sljEVntJ",
     "tax": "20%",
-    "items": [2,3]
+    "items": [3,4]
 }
 
 ###  - 404
-POST  http://127.0.0.1:8000/order_create/
+POST  http://130.193.37.228:9005/order_create/
 Content-Type: application/json
 
 {
@@ -49,7 +49,7 @@ Content-Type: application/json
 }
 
 ### html - 200
-GET  http://127.0.0.1:8000/order_html/1/
+GET  http://130.193.37.228:9005/order_html/1/
 
 ### html - 404
-GET  http://127.0.0.1:8000/order_html/1122444/
+GET  http://130.193.37.228:9005/order_html/1122444/
