@@ -6,8 +6,8 @@ from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 
 from api.models import Discount, Item, Order, Tax
-from api.sub_view import generate_line_items
-from api.var import API_KEY, CANCEL_URL, SUCCESS_URL, TAX20
+from api.sub_view import generate_item, generate_line_items
+from api.var import API_KEY, CANCEL_URL, SUCCESS_URL
 
 stripe.api_key = API_KEY
 
@@ -27,17 +27,12 @@ def buy_item(request, id):
     if discont == 'None':
         discont = []
     item = get_object_or_404(Item, id=id)
+    item_list = []
+    item_list.append(generate_item(item))
     session = stripe.checkout.Session.create(
-        line_items=[{
-            'price_data': {
-                'currency': item.currency,
-                'product_data': {'name': item.name, },
-                'unit_amount': int(item.price * 100),
-            },
-            'quantity': 1,
-            'tax_rates': [TAX20], }],
+        line_items=item_list,
         mode='payment',
-        discounts=[{'coupon': discont, }],
+        discounts=[{'coupon': discont}],
         success_url=SUCCESS_URL,
         cancel_url=CANCEL_URL,
     )
@@ -50,12 +45,12 @@ def order_create(request):
     try:
         discont = Discount.objects.get(
             discont_link=request.data.get('discont'))
-    except:
+    except Discount.DoesNotExist:
         discont = None
     try:
         tax = Tax.objects.get(tax_unit=request.data.get('tax'))
-    except:
-        tax = Tax.objects.get(tax_unit='tax20')
+    except Tax.DoesNotExist:
+        tax = Tax.objects.get(tax_unit='20%')
     items = request.data.get('items')
     if items is None:
         return Response({'error': '"items" is empty'},
