@@ -20,7 +20,7 @@ Content-Type: application/json
     "items": [1,2]
 }
 
-### Без дисконта и налога - 200
+### Без дисконта и налога(по умолчанию 20%) - 200
 POST  http://130.193.37.228:9005/order_create/
 Content-Type: application/json
 
