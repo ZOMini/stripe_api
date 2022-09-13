@@ -5,7 +5,8 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 
-from api.models import Discount, Item, Order, Tax
+from api.models import Item, Order
+from api.serializers import OrderSerializer
 from api.sub_view import generate_item, generate_line_items
 from api.var import API_KEY, CANCEL_URL, SUCCESS_URL
 
@@ -42,34 +43,10 @@ def buy_item(request, id):
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
 def order_create(request):
-    try:
-        discont = Discount.objects.get(
-            discont_link=request.data.get('discont'))
-    except Discount.DoesNotExist:
-        discont = None
-    try:
-        tax = Tax.objects.get(tax_unit=request.data.get('tax'))
-    except Tax.DoesNotExist:
-        tax = Tax.objects.get(tax_unit='20%')
-    items = request.data.get('items')
-    if items is None:
-        return Response({'error': '"items" is empty'},
-                        status=status.HTTP_404_NOT_FOUND)
-    items_list, items_currency = [], set()
-    for item in items:
-        item = get_object_or_404(Item, id=item)
-        items_currency.add(item.currency)
-        items_list.append(item)
-    if len(items_currency) > 1:
-        return Response({'error': 'Товары в заказе имеют разные валюты.'},
-                        status=status.HTTP_409_CONFLICT)
-    try:
-        order = Order.objects.create(discont=discont,
-                                     tax=tax,)
-        order.items.set(items_list)
-    except Exception as e:
-        return Response({'error': e.args}, status=status.HTTP_400_BAD_REQUEST)
-    return Response(data={'orderID': order.id},
+    serializer = OrderSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    data = serializer.create(serializer.validated_data)
+    return Response(data={'orderID': data},
                     status=status.HTTP_201_CREATED)
 
 

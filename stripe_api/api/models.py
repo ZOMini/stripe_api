@@ -31,6 +31,9 @@ class Discount(models.Model):
     def __str__(self):
         return self.discont_unit
 
+    def __repr__(self) -> str:
+        return self.id
+
 
 class Tax(models.Model):
     tax_unit = models.CharField('Налог', max_length=255)
@@ -43,6 +46,9 @@ class Tax(models.Model):
 
     def __str__(self):
         return self.tax_link
+
+    def __repr__(self) -> str:
+        return self.id
 
 
 class Order(models.Model):

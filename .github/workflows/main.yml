@@ -49,7 +49,7 @@ jobs:
               cd stripe_api
               rm .env
               touch .env
-              echo DEBUG=True >> .env
+              echo DEBUG=False >> .env
               echo DB_ENGINE=django.db.backends.postgresql >> .env
               echo DB_NAME=postgres >> .env
               echo POSTGRES_USER=postgres >> .env
