@@ -6,7 +6,7 @@ Spripe API. Работа с платежной системой Stripe.<br>
 
 ### Проект работает:
 - Для тестирования использовал REST Client for Visual Studio Code, см. файл requests.http в папке с проектом.
-- http://130.193.37.228:9005/swagger/ - API documentation
+- http://130.193.37.228:9005/redoc/ - API documentation
 - http://130.193.37.228:9005/admin/ - username = superuser / password = password
 - http://130.193.37.228:9005/item/1/ api html с кнопкой покупки отдельного товара.
 - http://130.193.37.228:9005/item/1/?coupon=sljEVntJ С промиком.
