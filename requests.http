@@ -48,7 +48,7 @@ Content-Type: application/json
     "items": [1,2]
 }
 
-### Разные валюты - 409
+### Разные валюты - 400
 POST  http://130.193.37.228:9005/order_create/
 Content-Type: application/json
 

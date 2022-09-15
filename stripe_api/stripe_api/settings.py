@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'api.apps.ApiConfig',
     'api_html.apps.ApiHtmlConfig',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -111,3 +112,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SWAGGER_SETTINGS = {
+    "DEFAULT_MODEL_RENDERING": "example"
+}

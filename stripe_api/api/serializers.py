@@ -6,7 +6,7 @@ from api.models import Discount, Item, Order, Tax
 
 class OrderSerializer(serializers.Serializer):
     items = serializers.ListField()
-    discont = serializers.CharField(required=False)
+    discont = serializers.CharField(required=False, )
     tax = serializers.CharField(required=False)
 
     def validate_items(self, value):

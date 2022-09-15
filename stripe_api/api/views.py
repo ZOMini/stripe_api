@@ -1,10 +1,12 @@
 import stripe
 from django.shortcuts import get_object_or_404, redirect
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 
+import api.schemas as sch
 from api.models import Item, Order
 from api.serializers import OrderSerializer
 from api.sub_view import generate_item, generate_line_items
@@ -13,6 +15,12 @@ from api.var import API_KEY, CANCEL_URL, SUCCESS_URL
 stripe.api_key = API_KEY
 
 
+@swagger_auto_schema(
+    method='get',
+    manual_parameters=[sch.ITEM_DETAIL],
+    operation_description='HTML - individual product purchase page.',
+    tags=['Operations with individual goods'],
+    responses={200: 'HTML page', 404: 'Not found'})
 @api_view(['GET'])
 @renderer_classes([TemplateHTMLRenderer])
 def item_detail(request, id):
@@ -22,6 +30,12 @@ def item_detail(request, id):
     return Response(data=context, template_name='api_html/buy_item_api.html')
 
 
+@swagger_auto_schema(
+    method='get',
+    manual_parameters=[sch.ITEM_DETAIL],
+    operation_description='API redirect.',
+    tags=['Operations with individual goods'],
+    responses={303: 'Redirecting to the purchase page.', 404: 'Not found'})
 @api_view(['GET'])
 def buy_item(request, id):
     discont = request.query_params.get('coupon')
@@ -40,6 +54,14 @@ def buy_item(request, id):
     return redirect(session.url)
 
 
+@swagger_auto_schema(
+    method='post',
+    operation_description='API post order.',
+    tags=['Operations with order'],
+    request_body=sch.ORDER_BODY,
+    responses={201: sch.ORDER_RESPONSE,
+               400: 'ValidationError',
+               404: 'Not found'})
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
 def order_create(request):
@@ -50,6 +72,11 @@ def order_create(request):
                     status=status.HTTP_201_CREATED)
 
 
+@swagger_auto_schema(
+    method='get',
+    operation_description='HTML - Order purchase page.',
+    tags=['Operations with order'],
+    responses={200: 'HTML page', 404: 'Not found'})
 @api_view(['GET'])
 @renderer_classes([TemplateHTMLRenderer])
 def order_html(request, id):
@@ -62,6 +89,11 @@ def order_html(request, id):
     return Response(data=context, template_name='api_html/order_api.html')
 
 
+@swagger_auto_schema(
+    method='get',
+    operation_description='API redirect.',
+    tags=['Operations with order'],
+    responses={303: 'Redirecting to the purchase page.', 404: 'Not found'})
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def order_buy(request, id):
