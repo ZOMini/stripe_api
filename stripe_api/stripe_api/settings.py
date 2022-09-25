@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', default ='django-insecure-8xmmwqm%95=lllml*rq5(#v&2xqxdm%0w5dwwz7j_zrz#^v=!2')
 
-DEBUG = False
+DEBUG = os.getenv('DEBUG', default = False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -13,7 +13,7 @@ INTERNAL_IPS = ['127.0.0.1',]
 
 
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://web:8005', 'http://127.0.0.1:8005', 'http://130.193.37.228', 'http://130.193.37.228:9005']
-SERV_HOST = os.getenv('HOST', default ='127.0.0.1')
+SERV_HOST = os.getenv('HOST', default = '127.0.0.1')
 CSRF_TRUSTED_ORIGINS.append(f'http://*.{SERV_HOST}:9005')
 
 INSTALLED_APPS = [

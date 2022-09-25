@@ -2,7 +2,7 @@
 [![foodgram workflow](https://github.com/zomini/stripe_api/actions/workflows/main.yml/badge.svg)](https://github.com/zomini/zomini/stripe_api/actions/workflows/main.yml)
 # stripe_api
 Spripe API. Работа с платежной системой Stripe.<br>
-
+Текст задания - [Backend Test](https://github.com/ZOMini/stripe_api/blob/main/Testwork%20Python%20Developer.pdf)
 
 ### Проект работает:
 - Для тестирования использовал REST Client for Visual Studio Code, см. файл requests.http в папке с проектом.
