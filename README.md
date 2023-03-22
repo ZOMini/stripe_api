@@ -1,8 +1,8 @@
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://130.193.37.228:9005/item/1/)
 [![foodgram workflow](https://github.com/zomini/stripe_api/actions/workflows/main.yml/badge.svg)](https://github.com/zomini/zomini/stripe_api/actions/workflows/main.yml)
 # stripe_api
-Spripe API. Работа с платежной системой Stripe.<br>
-Текст задания - [Backend Test](https://github.com/ZOMini/stripe_api/blob/main/Testwork%20Python%20Developer.pdf)
+Spripe API. Работа с платежной системой Stripe. Тестовое задание.<br>
+Текст задания - [Test Task](https://github.com/ZOMini/stripe_api/blob/main/Testwork%20Python%20Developer.pdf)
 
 ### Проект работает:
 - Для тестирования использовал REST Client for Visual Studio Code, см. файл requests.http в папке с проектом.
